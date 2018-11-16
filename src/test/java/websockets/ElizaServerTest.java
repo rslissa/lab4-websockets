@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
+import static java.lang.String.*;
 import static org.junit.Assert.assertEquals;
 
 public class ElizaServerTest {
@@ -29,7 +30,8 @@ public class ElizaServerTest {
 
 	@Before
 	public void setup() throws DeploymentException {
-		server = new Server("localhost", 8025, "/websockets", new HashMap<String, Object>(), ElizaServerEndpoint.class);
+		server = new Server("localhost", 8025, "/websockets",
+            new HashMap<>(), ElizaServerEndpoint.class);
 		server.start();
 	}
 
@@ -83,7 +85,7 @@ public class ElizaServerTest {
 
         @Override
         public void onMessage(String message) {
-            LOGGER.info("Client received \""+message+"\"");
+            LOGGER.info(format("Client received \"%s\"", message));
             list.add(message);
             latch.countDown();
         }

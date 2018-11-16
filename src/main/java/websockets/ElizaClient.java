@@ -13,20 +13,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ElizaClient {
-	private static final Logger LOGGER = Grizzly.logger(ElizaClient.class);
-	public static CountDownLatch LATCH = new CountDownLatch(1);
+  private static final Logger LOGGER = Grizzly.logger(ElizaClient.class);
+  public static final CountDownLatch LATCH = new CountDownLatch(1);
 
-	public static void main(String[] args) {
-		runClient();
-	}
+  public static void main(String[] args) {
+    runClient();
+  }
 
-	public static void runClient() {
-		ClientManager client = ClientManager.createClient();
-		try {
-			client.connectToServer(ElizaClientEndpoint.class, new URI("ws://localhost:8025/websockets/eliza"));
-			LATCH.await();
-		} catch (DeploymentException | IOException | URISyntaxException | InterruptedException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
-		}
-	}
+  private static void runClient() {
+    ClientManager client = ClientManager.createClient();
+    try {
+      client.connectToServer(ElizaClientEndpoint.class, new URI("ws://localhost:8025/websockets/eliza"));
+      LATCH.await();
+    } catch (DeploymentException | IOException | URISyntaxException | InterruptedException e) {
+      LOGGER.log(Level.SEVERE, e.toString(), e);
+    }
+  }
 }
